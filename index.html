@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>初代宝可梦图鉴 | 151</title>
+<style>
+  :root {
+    --pokedex-red: #DC0A2D;
+    --pokedex-dark: #1A1A2E;
+    --pokedex-bg: #F0F0F0;
+    --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --type-grass: #78C850;
+    --type-fire: #F08030;
+    --type-water: #6890F0;
+    --type-bug: #A8B820;
+    --type-normal: #A8A878;
+    --type-poison: #A040A0;
+    --type-electric: #F8D030;
+    --type-ground: #E0C068;
+    --type-fairy: #EE99AC;
+    --type-fighting: #C03028;
+    --type-psychic: #F85888;
+    --type-rock: #B8A038;
+    --type-ghost: #705898;
+    --type-ice: #98D8D8;
+    --type-dragon: #7038F8;
+    --type-flying: #A890F0;
+    --type-steel: #B8B8D0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--pokedex-bg);
+    min-height: 100vh;
+    color: #333;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, var(--pokedex-red) 0%, #B00720 100%);
+    color: white;
+    padding: 24px 20px 18px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(220,10,45,0.3);
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .header h1 .count {
+    font-size: 13px;
+    font-weight: 600;
+    background: rgba(255,255,255,0.2);
+    padding: 2px 12px;
+    border-radius: 20px;
+    letter-spacing: 0;
+  }
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .search-wrap {
+    position: relative;
+  }
+  .search-wrap input {
+    padding: 8px 14px 8px 36px;
+    border: none;
+    border-radius: 24px;
+    font-size: 14px;
+    width: 200px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    outline: none;
+    transition: 0.3s;
+  }
+  .search-wrap input::placeholder { color: rgba(255,255,255,0.6); }
+  .search-wrap input:focus { background: rgba(255,255,255,0.35); width: 240px; }
+  .search-wrap .icon {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    font-size: 14px; opacity: 0.7;
+  }
+
+  /* Type Filter */
+  .type-filters {
+    max-width: 1200px;
+    margin: 16px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 20px;
+  }
+  .type-filter {
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: 0.2s;
+    opacity: 0.6;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+  .type-filter:hover { opacity: 0.85; transform: translateY(-1px); }
+  .type-filter.active { opacity: 1; box-shadow: 0 2px 10px rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.6); }
+  .type-filter.all-btn {
+    background: rgba(255,255,255,0.2); opacity: 0.7;
+  }
+  .type-filter.all-btn.active { opacity: 1; background: rgba(255,255,255,0.35); }
+
+  /* Grid */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 12px;
+  }
+
+  /* Pokémon Card */
+  .pkmn-card {
+    background: white;
+    border-radius: 16px;
+    padding: 12px 8px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--card-shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .pkmn-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--card-color, var(--type-normal));
+    transition: 0.3s;
+  }
+  .pkmn-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  }
+  .pkmn-card .num {
+    font-size: 11px;
+    color: #999;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .pkmn-card .sprite-area {
+    width: 80px; height: 80px;
+    margin: 6px auto;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--card-bg, #f5f5f5);
+    transition: 0.3s;
+  }
+  .pkmn-card .sprite-area .pkmn-sprite {
+    width: 72px !important;
+    height: 72px !important;
+    background-size: contain !important;
+  }
+  .pkmn-card:hover .sprite-area { transform: scale(1.1); }
+  
+  
+  .pkmn-card .name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+    margin-top: 2px;
+  }
+  .pkmn-card .name-en {
+    font-size: 10px;
+    color: #aaa;
+    font-weight: 500;
+  }
+  .pkmn-card .types {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+  .pkmn-card .type-badge {
+    font-size: 9px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  /* Empty State */
+  .empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+  }
+  .empty-state .emoji { font-size: 48px; margin-bottom: 12px; }
+  .empty-state p { font-size: 16px; }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.25s ease;
+  }
+  .modal-overlay.open { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+  .modal {
+    background: white;
+    border-radius: 24px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.15);
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+  }
+  .modal-close:hover { background: rgba(0,0,0,0.3); transform: rotate(90deg); }
+
+  .modal-top {
+    padding: 24px 24px 16px;
+    color: white;
+    position: relative;
+    border-radius: 24px 24px 0 0;
+  }
+  .modal-top .num-tag {
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0.7;
+    letter-spacing: 1px;
+  }
+  .modal-top h2 {
+    font-size: 26px;
+    font-weight: 800;
+    margin: 2px 0;
+  }
+  .modal-top .name-en-sub {
+    font-size: 14px;
+    opacity: 0.7;
+    font-weight: 500;
+  }
+  .modal-top .types-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .modal-top .type-badge-lg {
+    font-size: 12px;
+    padding: 4px 16px;
+    border-radius: 20px;
+    color: white;
+    font-weight: 700;
+    background: rgba(255,255,255,0.25);
+    letter-spacing: 0.5px;
+  }
+  .modal-sprite-wrap {
+    text-align: center;
+    margin: -40px 0 8px;
+    position: relative;
+    z-index: 2;
+  }
+  .modal-sprite {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 140px;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.2));
+    animation: float 3s ease-in-out infinite;
+  }
+  .modal-sprite .pkmn-sprite {
+    width: 120px !important;
+    height: 120px !important;
+    background-size: contain !important;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .modal-body {
+    padding: 0 24px 24px;
+  }
+
+  /* Info Rows */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .info-item {
+    background: #f5f5f5;
+    border-radius: 12px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+  .info-item .label {
+    font-size: 10px;
+    color: #999;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .info-item .value {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    margin-top: 2px;
+  }
+
+  /* Description */
+  .desc-box {
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #555;
+  }
+  .desc-box .ability {
+    display: inline-block;
+    background: var(--pokedex-red);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 6px;
+  }
+
+  /* Stats */
+  .stats-section h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #666;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .stat-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    width: 28px;
+    text-align: right;
+    color: #999;
+  }
+  .stat-val {
+    font-size: 13px;
+    font-weight: 700;
+    width: 32px;
+    text-align: right;
+  }
+  .stat-bar-bg {
+    flex: 1;
+    height: 8px;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .stat-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0;
+  }
+  .modal.open .stat-bar { width: var(--bar-w); }
+
+  /* Total Stats */
+  .stat-total {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #eee;
+  }
+  .stat-total .label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #999;
+  }
+  .stat-total .val {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--pokedex-red);
+  }
+
+  /* Navigation */
+  .modal-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    gap: 8px;
+  }
+  .modal-nav button {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    transition: 0.2s;
+    color: #666;
+  }
+  .modal-nav button:hover {
+    border-color: var(--pokedex-red);
+    color: var(--pokedex-red);
+    background: #FFF0F0;
+  }
+  .modal-nav button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: #eee;
+    color: #ccc;
+    background: white;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    color: #aaa;
+    font-size: 12px;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 20px;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .header h1 { font-size: 18px; }
+    .header-actions { width: 100%; }
+    .search-wrap { flex: 1; }
+    .search-wrap input { width: 100%; }
+    .search-wrap input:focus { width: 100%; }
+    .type-filters { gap: 4px; }
+    .type-filter { font-size: 11px; padding: 3px 10px; }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
+    .pkmn-card .sprite-area { width: 64px; height: 64px; }
+    .pkmn-card .sprite { font-size: 34px; }
+    .info-grid { grid-template-columns: 1fr 1fr; }
+    .modal { max-width: 100%; border-radius: 16px; margin: 10px; }
+    
+  }
+
+  /* Animated sprite styles */
+  .pkmn-sprite {
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    image-rendering: auto;
+    background-size: contain;
+  }
+  .pkmn-card .sprite-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <h1>
+      🎮 初代宝可梦图鉴
+      <span class="count">151 / 151</span>
+    </h1>
+    <div class="header-actions">
+      <div class="search-wrap">
+        <span class="icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="搜索编号 / 名称..." oninput="renderGrid()">
+      </div>
+    </div>
+  </div>
+  <div class="type-filters" id="typeFilters"></div>
+</div>
+
+<div class="container">
+  <div class="grid" id="pkmnGrid"></div>
+</div>
+
+<div class="footer">
+  初代宝可梦 151 — 数据本地嵌入 · 无需联网
+</div>
+
+<!-- Detail Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-top" id="modalTop">
+      <div class="num-tag" id="modalNum">#001</div>
+      <h2 id="modalName">妙蛙种子</h2>
+      <div class="name-en-sub" id="modalNameEn">Bulbasaur</div>
+      <div class="types-row" id="modalTypes"></div>
+    </div>
+    <div class="modal-sprite-wrap">
+      <div class="modal-sprite" id="modalSprite">🌱</div>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="label">身高</div>
+          <div class="value" id="modalHeight">0.7 m</div>
+        </div>
+        <div class="info-item">
+          <div class="label">体重</div>
+          <div class="value" id="modalWeight">6.9 kg</div>
+        </div>
+        <div class="info-item">
+          <div class="label">特性</div>
+          <div class="value" id="modalAbility">茂盛</div>
+        </div>
+      </div>
+      <div class="desc-box" id="modalDesc">...</div>
+      <div class="stats-section">
+        <h3>基础种族值</h3>
+        <div id="modalStats"></div>
+        <div class="stat-total">
+          <span class="label">种族值总和</span>
+          <span class="val" id="modalTotal">0</span>
+        </div>
+      </div>
+      <div class="modal-nav">
+        <button id="prevBtn" onclick="navPokemon(-1)">◀ 上一只</button>
+        <button id="nextBtn" onclick="navPokemon(1)">下一只 ▶</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Type Colors ───
+const TYPE_COLORS = {
+  '草': '#78C850', '火': '#F08030', '水': '#6890F0',
+  '虫': '#A8B820', '一般': '#A8A878', '毒': '#A040A0',
+  '电': '#F8D030', '地面': '#E0C068', '妖精': '#EE99AC',
+  '格斗': '#C03028', '超能力': '#F85888', '岩石': '#B8A038',
+  '幽灵': '#705898', '冰': '#98D8D8', '龙': '#7038F8',
+  '飞行': '#A890F0', '钢': '#B8B8D0'
+};
+const TYPE_LIST = ['一般','火','水','草','电','冰','格斗','毒','地面','飞行','超能力','虫','岩石','幽灵','龙','钢','妖精'];
+
+// ─── Animated Sprites (Gen5, embedded) ───
+function getSpriteStyle(id, scale) {
+  scale = scale || 2;
+  const s = 96 * scale;
+  const w = Math.round(s * 0.75);
+  const h = Math.round(s * 0.75);
+  return `background-image: url(sprites/${id}.gif); background-size: ${w}px ${h}px; width: ${w}px; height: ${h}px; background-repeat: no-repeat; background-position: center; display: inline-block;`;
+}
+
+// ─── All 151 Pokémon Data ───// ─── All 151 Pokémon Data ───
+const POKEMON = [
+  {id:1,name_zh:"妙蛙种子",name_en:"Bulbasaur",types:["草","毒"],height:0.7,weight:6.9,ability:"茂盛",stats:{hp:45,atk:49,def:49,spa:65,spd:65,spe:45},desc:"出生时就背着种子。据说种子长得越大，妙蛙种子就会越健康。"},
+  {id:2,name_zh:"妙蛙草",name_en:"Ivysaur",types:["草","毒"],height:1.0,weight:13.0,ability:"茂盛",stats:{hp:60,atk:62,def:63,spa:80,spd:80,spe:60},desc:"当背上的花苞散发出甜甜的香气时，就意味着它快要开花了。"},
+  {id:3,name_zh:"妙蛙花",name_en:"Venusaur",types:["草","毒"],height:2.0,weight:100.0,ability:"茂盛",stats:{hp:80,atk:82,def:83,spa:100,spd:100,spe:80},desc:"背上的花朵能吸收阳光的能量并将其转化为战斗力。"},
+  {id:4,name_zh:"小火龙",name_en:"Charmander",types:["火"],height:0.6,weight:8.5,ability:"猛火",stats:{hp:39,atk:52,def:43,spa:60,spd:50,spe:65},desc:"尾巴上的火焰是其生命力的象征。火焰熄灭时也就意味着生命结束。"},
+  {id:5,name_zh:"火恐龙",name_en:"Charmeleon",types:["火"],height:1.1,weight:19.0,ability:"猛火",stats:{hp:58,atk:64,def:58,spa:80,spd:65,spe:80},desc:"用锋利的爪子和尾巴上的火焰战斗。兴奋时会喷出青白色的火焰。"},
+  {id:6,name_zh:"喷火龙",name_en:"Charizard",types:["火","飞行"],height:1.7,weight:90.5,ability:"猛火",stats:{hp:78,atk:84,def:78,spa:109,spd:85,spe:100},desc:"能用翅膀飞到一千三百米的高空。会喷出极具破坏力的火焰。"},
+  {id:7,name_zh:"杰尼龟",name_en:"Squirtle",types:["水"],height:0.5,weight:9.0,ability:"激流",stats:{hp:44,atk:48,def:65,spa:50,spd:64,spe:43},desc:"遇到危险时会缩进壳里保护自己。壳上的凹凸纹路有助于减少水的阻力。"},
+  {id:8,name_zh:"卡咪龟",name_en:"Wartortle",types:["水"],height:1.0,weight:22.5,ability:"激流",stats:{hp:59,atk:63,def:80,spa:65,spd:80,spe:58},desc:"长长的毛发和尾巴被视为长寿的象征。会用壳上的凹痕记录自己的年龄。"},
+  {id:9,name_zh:"水箭龟",name_en:"Blastoise",types:["水"],height:1.6,weight:85.5,ability:"激流",stats:{hp:79,atk:83,def:100,spa:85,spd:105,spe:78},desc:"从背上的两个水炮中喷出的水流足以贯穿厚实的钢板。"},
+  {id:10,name_zh:"绿毛虫",name_en:"Caterpie",types:["虫"],height:0.3,weight:2.9,ability:"鳞粉",stats:{hp:45,atk:30,def:35,spa:20,spd:20,spe:45},desc:"会从头顶的触角中释放出强烈的臭味来驱赶敌人以保护自己。"},
+  {id:11,name_zh:"铁甲蛹",name_en:"Metapod",types:["虫"],height:0.7,weight:9.9,ability:"蜕皮",stats:{hp:50,atk:20,def:55,spa:25,spd:25,spe:30},desc:"外壳坚硬，在进化完成之前只能一动不动地等待。"},
+  {id:12,name_zh:"巴大蝶",name_en:"Butterfree",types:["虫","飞行"],height:1.1,weight:32.0,ability:"复眼",stats:{hp:60,atk:45,def:50,spa:90,spd:80,spe:70},desc:"翅膀上覆盖着细密的鳞粉。沾上鳞粉的对手会被剥夺感知能力。"},
+  {id:13,name_zh:"独角虫",name_en:"Weedle",types:["虫","毒"],height:0.3,weight:3.2,ability:"鳞粉",stats:{hp:40,atk:35,def:30,spa:20,spd:20,spe:50},desc:"头顶尖锐的毒针是它的主要武器。会用锋利的毒针攻击靠近它的对手。"},
+  {id:14,name_zh:"铁壳蛹",name_en:"Kakuna",types:["虫","毒"],height:0.6,weight:10.0,ability:"蜕皮",stats:{hp:45,atk:25,def:50,spa:25,spd:25,spe:35},desc:"虽然几乎无法移动，但它坚硬的外壳能抵御大多数攻击。"},
+  {id:15,name_zh:"大针蜂",name_en:"Beedrill",types:["虫","毒"],height:1.0,weight:29.5,ability:"虫之预感",stats:{hp:65,atk:90,def:40,spa:45,spd:80,spe:75},desc:"手部和尾部共三根毒针是它的标志性武器。会成群结队地出现。"},
+  {id:16,name_zh:"波波",name_en:"Pidgey",types:["一般","飞行"],height:0.3,weight:1.8,ability:"锐利目光",stats:{hp:40,atk:45,def:40,spa:35,spd:35,spe:56},desc:"性情温顺的鸟类宝可梦。会用翅膀拍打地面扬起沙尘来保护自己。"},
+  {id:17,name_zh:"比比鸟",name_en:"Pidgeotto",types:["一般","飞行"],height:1.1,weight:30.0,ability:"锐利目光",stats:{hp:63,atk:60,def:55,spa:50,spd:50,spe:71},desc:"拥有极强的领地意识。会用锋利的爪子抓住猎物，运送到远处。"},
+  {id:18,name_zh:"大比鸟",name_en:"Pidgeot",types:["一般","飞行"],height:1.5,weight:39.5,ability:"锐利目光",stats:{hp:83,atk:80,def:75,spa:70,spd:70,spe:101},desc:"能以两马赫的速度在空中飞行。它的存在本身就是天空的霸主象征。"},
+  {id:19,name_zh:"小拉达",name_en:"Rattata",types:["一般"],height:0.3,weight:3.5,ability:"逃跑",stats:{hp:30,atk:56,def:35,spa:25,spd:35,spe:72},desc:"非常贪吃，为了找到食物什么都敢咬。獠牙会不断生长，一生都在磨牙。"},
+  {id:20,name_zh:"拉达",name_en:"Raticate",types:["一般"],height:0.7,weight:18.5,ability:"逃跑",stats:{hp:55,atk:81,def:60,spa:50,spd:70,spe:97},desc:"后腿的肌肉很发达，可以筑巢在水边。用獠牙攻击时威力巨大。"},
+  {id:21,name_zh:"烈雀",name_en:"Spearow",types:["一般","飞行"],height:0.3,weight:2.0,ability:"锐利目光",stats:{hp:40,atk:60,def:30,spa:31,spd:31,spe:70},desc:"虽然体型小但非常好斗。一旦被激怒就会展开猛烈的反击。"},
+  {id:22,name_zh:"大嘴雀",name_en:"Fearow",types:["一般","飞行"],height:1.2,weight:38.0,ability:"锐利目光",stats:{hp:65,atk:90,def:65,spa:61,spd:61,spe:100},desc:"拥有巨大的翅膀，可以持续飞行一整天而不需要休息。"},
+  {id:23,name_zh:"阿柏蛇",name_en:"Ekans",types:["毒"],height:2.0,weight:6.9,ability:"威吓",stats:{hp:35,atk:60,def:44,spa:40,spd:54,spe:55},desc:"会将身体蜷缩起来以积蓄力量攻击。长长的舌头用于感知周围环境。"},
+  {id:24,name_zh:"阿柏怪",name_en:"Arbok",types:["毒"],height:3.5,weight:65.0,ability:"威吓",stats:{hp:60,atk:95,def:69,spa:65,spd:79,spe:80},desc:"腹部的花纹会因地区和心情而改变。被认为是某种恐怖图腾的演变。"},
+  {id:25,name_zh:"皮卡丘",name_en:"Pikachu",types:["电"],height:0.4,weight:6.0,ability:"静电",stats:{hp:35,atk:55,def:40,spa:50,spd:50,spe:90},desc:"两颊的电力袋储存着电能。受到刺激时会使出十万伏特的雷电攻击。"},
+  {id:26,name_zh:"雷丘",name_en:"Raichu",types:["电"],height:0.8,weight:30.0,ability:"静电",stats:{hp:60,atk:90,def:55,spa:90,spd:80,spe:110},desc:"尾巴能释放强电流。积蓄的电量超过自身负荷时会发生爆炸。"},
+  {id:27,name_zh:"穿山鼠",name_en:"Sandshrew",types:["地面"],height:0.6,weight:12.0,ability:"沙隐",stats:{hp:50,atk:75,def:85,spa:20,spd:30,spe:40},desc:"蜷缩成球状来防御。在干燥的沙地上活动自如，速度极快。"},
+  {id:28,name_zh:"穿山王",name_en:"Sandslash",types:["地面"],height:1.0,weight:29.5,ability:"沙隐",stats:{hp:75,atk:100,def:110,spa:45,spd:55,spe:65},desc:"背上的尖刺由坚硬的角质构成。遇到危险时会蜷缩成球状滚动攻击。"},
+  {id:29,name_zh:"尼多兰",name_en:"Nidoran♀",types:["毒"],height:0.4,weight:7.0,ability:"毒刺",stats:{hp:55,atk:47,def:52,spa:40,spd:40,spe:41},desc:"虽然体型娇小但性格刚烈。头上的毒刺是它最强大的武器。"},
+  {id:30,name_zh:"尼多娜",name_en:"Nidorina",types:["毒"],height:0.8,weight:20.0,ability:"毒刺",stats:{hp:70,atk:62,def:67,spa:55,spd:55,spe:56},desc:"耳朵上的毒刺会随着成长而变得坚硬。会用锋利的牙齿撕咬敌人。"},
+  {id:31,name_zh:"尼多后",name_en:"Nidoqueen",types:["毒","地面"],height:1.3,weight:60.0,ability:"毒刺",stats:{hp:90,atk:92,def:87,spa:75,spd:85,spe:76},desc:"全身覆盖着坚硬的鳞片。会用强韧的尾巴将对手甩飞。"},
+  {id:32,name_zh:"尼多朗",name_en:"Nidoran♂",types:["毒"],height:0.5,weight:9.0,ability:"毒刺",stats:{hp:46,atk:57,def:40,spa:40,spd:40,spe:50},desc:"耳朵比尼多兰更大，可以听到遥远的声音。性格稍显好斗。"},
+  {id:33,name_zh:"尼多力诺",name_en:"Nidorino",types:["毒"],height:0.9,weight:19.5,ability:"毒刺",stats:{hp:61,atk:72,def:57,spa:55,spd:55,spe:65},desc:"头上的角含剧毒。用突刺攻击对手时会使其中毒。"},
+  {id:34,name_zh:"尼多王",name_en:"Nidoking",types:["毒","地面"],height:1.4,weight:62.0,ability:"毒刺",stats:{hp:81,atk:102,def:77,spa:85,spd:75,spe:85},desc:"尾巴一旦甩起来就会爆发出惊人的力量。粗大的角连钻石也能刺穿。"},
+  {id:35,name_zh:"皮皮",name_en:"Clefairy",types:["妖精"],height:0.6,weight:7.5,ability:"迷人之躯",stats:{hp:70,atk:45,def:48,spa:60,spd:65,spe:35},desc:"月光会让它的身体散发着淡淡的微光。据说会聚集在满月之夜跳舞。"},
+  {id:36,name_zh:"皮可西",name_en:"Clefable",types:["妖精"],height:1.3,weight:40.0,ability:"迷人之躯",stats:{hp:95,atk:70,def:73,spa:95,spd:90,spe:60},desc:"传说只有在月圆之夜才能看到它。它的听觉极其灵敏。"},
+  {id:37,name_zh:"六尾",name_en:"Vulpix",types:["火"],height:0.6,weight:9.9,ability:"引火",stats:{hp:38,atk:41,def:40,spa:50,spd:65,spe:65},desc:"六条尾巴会随着成长而分裂增多。每一根尾巴都蕴含着火焰之力。"},
+  {id:38,name_zh:"九尾",name_en:"Ninetales",types:["火"],height:1.1,weight:19.9,ability:"引火",stats:{hp:73,atk:76,def:75,spa:81,spd:100,spe:100},desc:"九条尾巴各有不同的力量。据说能活一千年。智力极高。"},
+  {id:39,name_zh:"胖丁",name_en:"Jigglypuff",types:["一般","妖精"],height:0.5,weight:5.5,ability:"迷人之躯",stats:{hp:115,atk:45,def:20,spa:45,spd:25,spe:20},desc:"当它吸入大量空气时身体会膨胀。唱出的催眠曲能让任何人入睡。"},
+  {id:40,name_zh:"胖可丁",name_en:"Wigglytuff",types:["一般","妖精"],height:1.0,weight:12.0,ability:"迷人之躯",stats:{hp:140,atk:70,def:45,spa:85,spd:50,spe:45},desc:"体表的毛发柔软顺滑。生气时吸足气，身体会胀大到原来的数倍。"},
+  {id:41,name_zh:"超音蝠",name_en:"Zubat",types:["毒","飞行"],height:0.8,weight:7.5,ability:"精神力",stats:{hp:40,atk:45,def:35,spa:30,spd:40,spe:55},desc:"虽然眼睛退化看不见东西，但能通过超音波来感知周围的环境。"},
+  {id:42,name_zh:"大嘴蝠",name_en:"Golbat",types:["毒","飞行"],height:1.6,weight:55.0,ability:"精神力",stats:{hp:75,atk:80,def:70,spa:65,spd:75,spe:90},desc:"总是成群行动。会用尖利的牙齿咬住猎物并吸取血液。"},
+  {id:43,name_zh:"走路草",name_en:"Oddish",types:["草","毒"],height:0.5,weight:5.4,ability:"叶绿素",stats:{hp:45,atk:50,def:55,spa:75,spd:65,spe:30},desc:"白天会把根埋进土里吸收养分。到了夜晚才会出来活动。"},
+  {id:44,name_zh:"臭臭花",name_en:"Gloom",types:["草","毒"],height:0.8,weight:8.6,ability:"叶绿素",stats:{hp:60,atk:65,def:70,spa:85,spd:75,spe:40},desc:"流出的花蜜非常臭，但正是这种臭味吸引着喜欢它的宝可梦。"},
+  {id:45,name_zh:"霸王花",name_en:"Vileplume",types:["草","毒"],height:1.2,weight:18.6,ability:"叶绿素",stats:{hp:75,atk:80,def:85,spa:110,spd:90,spe:50},desc:"世界上最大的花瓣。走路时会洒落有毒的花粉污染周围空气。"},
+  {id:46,name_zh:"派拉斯",name_en:"Paras",types:["虫","草"],height:0.3,weight:5.4,ability:"孢子",stats:{hp:35,atk:70,def:55,spa:45,spd:55,spe:25},desc:"背上的蘑菇叫冬虫夏草，会从派拉斯身上吸取养分来生长。"},
+  {id:47,name_zh:"派拉斯特",name_en:"Parasect",types:["虫","草"],height:1.0,weight:29.5,ability:"孢子",stats:{hp:60,atk:95,def:80,spa:60,spd:80,spe:30},desc:"背上的蘑菇已经完全接管了它的身体。散发的孢子有药用价值。"},
+  {id:48,name_zh:"毛球",name_en:"Venonat",types:["虫","毒"],height:1.0,weight:30.0,ability:"复眼",stats:{hp:60,atk:55,def:50,spa:40,spd:55,spe:45},desc:"全身覆盖着细密的绒毛。大眼睛可以看清微小物体。"},
+  {id:49,name_zh:"摩鲁蛾",name_en:"Venomoth",types:["虫","毒"],height:1.5,weight:12.5,ability:"鳞粉",stats:{hp:70,atk:65,def:60,spa:90,spd:75,spe:90},desc:"翅膀上的鳞粉有剧毒。夜间活动，会追逐灯光。"},
+  {id:50,name_zh:"地鼠",name_en:"Diglett",types:["地面"],height:0.2,weight:0.8,ability:"沙隐",stats:{hp:10,atk:55,def:25,spa:35,spd:45,spe:95},desc:"虽然体长只有20厘米，但据说地下的身体比地面上的长得多。"},
+  {id:51,name_zh:"三地鼠",name_en:"Dugtrio",types:["地面"],height:0.7,weight:33.3,ability:"沙隐",stats:{hp:35,atk:100,def:50,spa:50,spd:70,spe:120},desc:"三只地鼠协同作战。能以超过100公里的时速挖掘地道。"},
+  {id:52,name_zh:"喵喵",name_en:"Meowth",types:["一般"],height:0.4,weight:4.2,ability:"捡拾",stats:{hp:40,atk:45,def:35,spa:40,spd:40,spe:90},desc:"喜欢闪亮的东西。为了收集硬币会大半夜不睡觉到处游荡。"},
+  {id:53,name_zh:"猫老大",name_en:"Persian",types:["一般"],height:1.0,weight:32.0,ability:"柔软",stats:{hp:65,atk:70,def:60,spa:65,spd:65,spe:115},desc:"额头的宝石闪闪发光。性格高傲，优雅而极具攻击性。"},
+  {id:54,name_zh:"可达鸭",name_en:"Psyduck",types:["水"],height:0.8,weight:19.6,ability:"湿气",stats:{hp:50,atk:52,def:48,spa:65,spd:50,spe:55},desc:"经常被剧烈的头痛困扰。头痛发作时会释放出不可思议的力量。"},
+  {id:55,name_zh:"哥达鸭",name_en:"Golduck",types:["水"],height:1.7,weight:76.6,ability:"湿气",stats:{hp:80,atk:82,def:78,spa:95,spd:80,spe:85},desc:"泳速与海豚相当的游泳高手。额头上的红色宝石会发光。"},
+  {id:56,name_zh:"猴怪",name_en:"Mankey",types:["格斗"],height:0.5,weight:28.0,ability:"精神力",stats:{hp:40,atk:80,def:35,spa:35,spd:45,spe:70},desc:"怒不可遏的性格。一旦发怒就会主动向任何生物发起攻击。"},
+  {id:57,name_zh:"火爆猴",name_en:"Primeape",types:["格斗"],height:1.0,weight:32.0,ability:"精神力",stats:{hp:65,atk:105,def:60,spa:60,spd:70,spe:95},desc:"会因愤怒而死然后复活。在完全冷静下来之前不会停止攻击。"},
+  {id:58,name_zh:"卡蒂狗",name_en:"Growlithe",types:["火"],height:0.7,weight:19.0,ability:"威吓",stats:{hp:55,atk:70,def:45,spa:70,spd:50,spe:60},desc:"性格忠诚而勇敢。会为了保护训练家而与任何对手战斗。"},
+  {id:59,name_zh:"风速狗",name_en:"Arcanine",types:["火"],height:1.9,weight:155.0,ability:"威吓",stats:{hp:90,atk:110,def:80,spa:100,spd:80,spe:95},desc:"以优美的姿态和惊人的速度闻名。据说能以极速奔驰千里。"},
+  {id:60,name_zh:"蚊香蝌蚪",name_en:"Poliwag",types:["水"],height:0.6,weight:12.4,ability:"储水",stats:{hp:40,atk:50,def:40,spa:40,spd:40,spe:90},desc:"肚皮的漩涡纹理是内臓的一部分。不同个体的纹理各不相同。"},
+  {id:61,name_zh:"蚊香君",name_en:"Poliwhirl",types:["水"],height:1.0,weight:20.0,ability:"储水",stats:{hp:65,atk:65,def:65,spa:50,spd:50,spe:90},desc:"擅长游泳。上岸后皮肤会分泌黏液保持湿润。"},
+  {id:62,name_zh:"蚊香泳士",name_en:"Poliwrath",types:["水","格斗"],height:1.3,weight:54.0,ability:"储水",stats:{hp:90,atk:95,def:95,spa:70,spd:90,spe:70},desc:"肌肉极其发达。能用强大的拳击在水中掀起巨浪。"},
+  {id:63,name_zh:"凯西",name_en:"Abra",types:["超能力"],height:0.9,weight:19.5,ability:"同步",stats:{hp:25,atk:20,def:15,spa:105,spd:55,spe:90},desc:"每天花18小时睡觉。即使在梦中也能使出各种超能力。"},
+  {id:64,name_zh:"勇基拉",name_en:"Kadabra",types:["超能力"],height:1.3,weight:56.5,ability:"同步",stats:{hp:40,atk:35,def:30,spa:120,spd:70,spe:105},desc:"使用超能力时手上的勺子会发出微光。是超能力现象的活证据。"},
+  {id:65,name_zh:"胡地",name_en:"Alakazam",types:["超能力"],height:1.5,weight:48.0,ability:"同步",stats:{hp:55,atk:50,def:45,spa:135,spd:95,spe:120},desc:"智商高达5000。记忆所有的事情，永远不会忘记。"},
+  {id:66,name_zh:"腕力",name_en:"Machop",types:["格斗"],height:0.8,weight:19.5,ability:"毅力",stats:{hp:70,atk:80,def:50,spa:35,spd:35,spe:35},desc:"拥有能举起相扑选手的怪力。每日都在刻苦锻炼肌肉。"},
+  {id:67,name_zh:"豪力",name_en:"Machoke",types:["格斗"],height:1.5,weight:70.5,ability:"毅力",stats:{hp:80,atk:100,def:70,spa:50,spd:60,spe:45},desc:"腰带的强度决定了它的力量上限。一旦解除腰带就会失控。"},
+  {id:68,name_zh:"怪力",name_en:"Machamp",types:["格斗"],height:1.6,weight:130.0,ability:"毅力",stats:{hp:90,atk:130,def:80,spa:65,spd:85,spe:55},desc:"四条手臂让它在格斗或举重上都占尽优势。攻防一体没有死角。"},
+  {id:69,name_zh:"喇叭芽",name_en:"Bellsprout",types:["草","毒"],height:0.7,weight:4.0,ability:"叶绿素",stats:{hp:50,atk:75,def:35,spa:70,spd:30,spe:40},desc:"看起来像植物，其实有脚。会用藤蔓状的身体缠住对手。"},
+  {id:70,name_zh:"口呆花",name_en:"Weepinbell",types:["草","毒"],height:1.0,weight:6.4,ability:"叶绿素",stats:{hp:65,atk:90,def:50,spa:85,spd:45,spe:55},desc:"会喷出腐蚀性的液体来融化猎物。嘴里有消化液。"},
+  {id:71,name_zh:"大食花",name_en:"Victreebel",types:["草","毒"],height:1.7,weight:15.5,ability:"叶绿素",stats:{hp:80,atk:105,def:65,spa:100,spd:70,spe:70},desc:"嘴里分泌出香甜的蜜汁引诱猎物。一旦被吞入就在劫难逃了。"},
+  {id:72,name_zh:"玛瑙水母",name_en:"Tentacool",types:["水","毒"],height:0.9,weight:45.5,ability:"恒净之躯",stats:{hp:40,atk:40,def:35,spa:50,spd:100,spe:70},desc:"身体大部分由水构成。触手有毒，被蜇到会感到剧痛。"},
+  {id:73,name_zh:"毒刺水母",name_en:"Tentacruel",types:["水","毒"],height:1.6,weight:55.0,ability:"恒净之躯",stats:{hp:80,atk:70,def:65,spa:80,spd:120,spe:100},desc:"80根触手可以自由伸缩。会用触手缠绕对手并注入毒素。"},
+  {id:74,name_zh:"小拳石",name_en:"Geodude",types:["岩石","地面"],height:0.4,weight:20.0,ability:"坚硬脑袋",stats:{hp:40,atk:80,def:100,spa:30,spd:30,spe:20},desc:"经常出现在山路旁。看起来像是路边普通的石头。"},
+  {id:75,name_zh:"隆隆石",name_en:"Graveler",types:["岩石","地面"],height:1.0,weight:105.0,ability:"坚硬脑袋",stats:{hp:55,atk:95,def:115,spa:45,spd:45,spe:35},desc:"从山上滚落时速度不断加快。被它碾过的东西无一幸免。"},
+  {id:76,name_zh:"隆隆岩",name_en:"Golem",types:["岩石","地面"],height:1.4,weight:300.0,ability:"坚硬脑袋",stats:{hp:80,atk:120,def:130,spa:55,spd:65,spe:45},desc:"每年蜕皮一次。蜕下的外壳会硬化后破裂。用火药填充体内。"},
+  {id:77,name_zh:"小火马",name_en:"Ponyta",types:["火"],height:1.0,weight:30.0,ability:"逃跑",stats:{hp:50,atk:85,def:55,spa:65,spd:65,spe:90},desc:"刚出生时跑得还很慢，但随着成长会变得越来越快。"},
+  {id:78,name_zh:"烈焰马",name_en:"Rapidash",types:["火"],height:1.7,weight:95.0,ability:"逃跑",stats:{hp:65,atk:100,def:70,spa:80,spd:80,spe:105},desc:"能以240公里的时速奔驰。鬃毛如同燃烧的火焰般跃动。"},
+  {id:79,name_zh:"呆呆兽",name_en:"Slowpoke",types:["水","超能力"],height:1.2,weight:36.0,ability:"迟钝",stats:{hp:90,atk:65,def:65,spa:40,spd:40,spe:15},desc:"反应极其迟钝。被咬到尾巴之后甚至要过五秒才会感觉到疼。"},
+  {id:80,name_zh:"呆壳兽",name_en:"Slowbro",types:["水","超能力"],height:1.6,weight:78.5,ability:"迟钝",stats:{hp:95,atk:75,def:110,spa:100,spd:80,spe:30},desc:"尾巴被大舌贝咬住后两者合为一体。它似乎并不介意。"},
+  {id:81,name_zh:"小磁怪",name_en:"Magnemite",types:["电","钢"],height:0.3,weight:6.0,ability:"磁力",stats:{hp:25,atk:35,def:70,spa:95,spd:55,spe:45},desc:"利用电磁波和反重力浮在空中。两侧磁铁极性相反。"},
+  {id:82,name_zh:"三合一磁怪",name_en:"Magneton",types:["电","钢"],height:1.0,weight:60.0,ability:"磁力",stats:{hp:50,atk:60,def:95,spa:120,spd:70,spe:70},desc:"三个小磁怪通过强力磁铁连接而成。会发出强力的电磁波。"},
+  {id:83,name_zh:"大葱鸭",name_en:"Farfetch'd",types:["一般","飞行"],height:0.8,weight:15.0,ability:"锐利目光",stats:{hp:52,atk:90,def:55,spa:58,spd:62,spe:60},desc:"总是带着一根大葱茎秆。葱既是武器也是食材。"},
+  {id:84,name_zh:"嘟嘟",name_en:"Doduo",types:["一般","飞行"],height:1.4,weight:39.2,ability:"逃跑",stats:{hp:35,atk:85,def:45,spa:35,spd:35,spe:75},desc:"两个大脑交替控制身体。睡眠时一个大脑保持清醒。"},
+  {id:85,name_zh:"嘟嘟利",name_en:"Dodrio",types:["一般","飞行"],height:1.8,weight:85.2,ability:"逃跑",stats:{hp:60,atk:110,def:70,spa:60,spd:60,spe:110},desc:"三个脑袋分别掌管喜怒哀乐。但三个脑袋从不意见统一。"},
+  {id:86,name_zh:"小海狮",name_en:"Seel",types:["水"],height:1.1,weight:90.0,ability:"厚脂肪",stats:{hp:65,atk:45,def:55,spa:45,spd:70,spe:45},desc:"生活在寒冷水域。厚厚的脂肪能抵御极寒。"},
+  {id:87,name_zh:"白海狮",name_en:"Dewgong",types:["水","冰"],height:1.7,weight:120.0,ability:"厚脂肪",stats:{hp:90,atk:70,def:80,spa:70,spd:95,spe:70},desc:"全身覆盖着纯白的体毛。在冰面上以优美的姿态滑行。"},
+  {id:88,name_zh:"臭泥",name_en:"Grimer",types:["毒"],height:0.9,weight:30.0,ability:"恶臭",stats:{hp:80,atk:80,def:50,spa:40,spd:50,spe:25},desc:"由工厂排放的污泥和污水中的细菌结合而诞生。"},
+  {id:89,name_zh:"臭臭泥",name_en:"Muk",types:["毒"],height:1.2,weight:30.0,ability:"恶臭",stats:{hp:105,atk:105,def:75,spa:65,spd:100,spe:50},desc:"散发出异常恶臭。只需一滴体液就能让整片地区臭不可闻。"},
+  {id:90,name_zh:"大舌贝",name_en:"Shellder",types:["水"],height:0.3,weight:4.0,ability:"硬壳盔甲",stats:{hp:30,atk:65,def:100,spa:45,spd:25,spe:40},desc:"外壳非常坚硬。被攻击时壳会闭得死死的，极难打开。"},
+  {id:91,name_zh:"刺甲贝",name_en:"Cloyster",types:["水","冰"],height:1.5,weight:132.5,ability:"硬壳盔甲",stats:{hp:50,atk:95,def:180,spa:85,spd:45,spe:70},desc:"外壳比钻石还硬。从壳缝中射出的尖刺威力惊人。"},
+  {id:92,name_zh:"鬼斯",name_en:"Gastly",types:["幽灵","毒"],height:1.3,weight:0.1,ability:"漂浮",stats:{hp:30,atk:35,def:30,spa:100,spd:35,spe:80},desc:"一团气体状的生命体。如被它笼罩，会开始感到晕眩。"},
+  {id:93,name_zh:"鬼斯通",name_en:"Haunter",types:["幽灵","毒"],height:1.6,weight:0.1,ability:"漂浮",stats:{hp:45,atk:50,def:45,spa:115,spd:55,spe:95},desc:"会用气体状的身体裹住猎物，汲取生命能量。喜欢舔人。"},
+  {id:94,name_zh:"耿鬼",name_en:"Gengar",types:["幽灵","毒"],height:1.5,weight:40.5,ability:"漂浮",stats:{hp:60,atk:65,def:60,spa:130,spd:75,spe:110},desc:"会隐藏在阴影中。体温约10°C，被它摸到会感到寒意刺骨。"},
+  {id:95,name_zh:"大岩蛇",name_en:"Onix",types:["岩石","地面"],height:8.8,weight:210.0,ability:"坚硬脑袋",stats:{hp:35,atk:45,def:160,spa:30,spd:45,spe:70},desc:"在地下高速挖掘。在地底穿行时会引起地面的震动。"},
+  {id:96,name_zh:"催眠貘",name_en:"Drowzee",types:["超能力"],height:1.0,weight:32.4,ability:"不眠",stats:{hp:60,atk:48,def:45,spa:43,spd:90,spe:42},desc:"如果鼻子碰到了你，你就会被它催眠。据说会吃梦为生。"},
+  {id:97,name_zh:"引梦貘人",name_en:"Hypno",types:["超能力"],height:1.6,weight:75.6,ability:"不眠",stats:{hp:85,atk:73,def:70,spa:73,spd:115,spe:67},desc:"手持的钟摆是催眠工具。会寻找不睡觉的孩子并催眠他们。"},
+  {id:98,name_zh:"大钳蟹",name_en:"Krabby",types:["水"],height:0.4,weight:6.5,ability:"怪力钳",stats:{hp:30,atk:105,def:90,spa:25,spd:25,spe:50},desc:"钳子拥有极强的破坏力。但一旦脱落就会变得很弱小。"},
+  {id:99,name_zh:"巨钳蟹",name_en:"Kingler",types:["水"],height:1.3,weight:60.0,ability:"怪力钳",stats:{hp:55,atk:130,def:115,spa:50,spd:50,spe:75},desc:"一只钳子比另一只大得多。巨钳的破坏力令人闻风丧胆。"},
+  {id:100,name_zh:"霹雳电球",name_en:"Voltorb",types:["电"],height:0.5,weight:10.4,ability:"隔音",stats:{hp:40,atk:30,def:50,spa:55,spd:55,spe:100},desc:"看起来像精灵球。受到刺激就会发生大爆炸。"},
+  {id:101,name_zh:"顽皮雷弹",name_en:"Electrode",types:["电"],height:1.2,weight:66.6,ability:"隔音",stats:{hp:60,atk:50,def:70,spa:80,spd:80,spe:150},desc:"体内储存了惊人的电能。稍有闪失就会发生灾难性的大爆炸。"},
+  {id:102,name_zh:"蛋蛋",name_en:"Exeggcute",types:["草","超能力"],height:0.4,weight:2.5,ability:"叶绿素",stats:{hp:60,atk:40,def:80,spa:60,spd:45,spe:40},desc:"虽然看起来像是蛋，实际上是种子的集合。六个一起通过心灵感应交流。"},
+  {id:103,name_zh:"椰蛋树",name_en:"Exeggutor",types:["草","超能力"],height:2.0,weight:120.0,ability:"叶绿素",stats:{hp:95,atk:95,def:85,spa:125,spd:75,spe:55},desc:"三个脑袋各自思考不同的事。使用强大的精神力量攻击。"},
+  {id:104,name_zh:"卡拉卡拉",name_en:"Cubone",types:["地面"],height:0.4,weight:6.5,ability:"坚硬脑袋",stats:{hp:50,atk:50,def:95,spa:40,spd:50,spe:35},desc:"头上戴着头骨。夜深时会为逝去的母亲哭泣。"},
+  {id:105,name_zh:"嘎啦嘎啦",name_en:"Marowak",types:["地面"],height:1.0,weight:45.0,ability:"坚硬脑袋",stats:{hp:60,atk:80,def:110,spa:50,spd:80,spe:45},desc:"用骨头作为武器。挥动骨棒时产生的风声就是它的战吼。"},
+  {id:106,name_zh:"飞腿郎",name_en:"Hitmonlee",types:["格斗"],height:1.5,weight:49.8,ability:"柔软",stats:{hp:50,atk:120,def:53,spa:35,spd:110,spe:87},desc:"腿可以伸缩自如。踢技的速度和力量在格斗系中首屈一指。"},
+  {id:107,name_zh:"快拳郎",name_en:"Hitmonchan",types:["格斗"],height:1.4,weight:50.2,ability:"锐利目光",stats:{hp:50,atk:105,def:79,spa:35,spd:110,spe:76},desc:"拳速堪比喷射机。有百裂拳、火焰拳、雷电拳等丰富招式。"},
+  {id:108,name_zh:"大舌头",name_en:"Lickitung",types:["一般"],height:1.2,weight:65.5,ability:"迟钝",stats:{hp:90,atk:55,def:75,spa:60,spd:75,spe:30},desc:"舌头长达两米。能用舌头卷起食物，并感知味道。"},
+  {id:109,name_zh:"瓦斯弹",name_en:"Koffing",types:["毒"],height:0.6,weight:1.0,ability:"漂浮",stats:{hp:40,atk:65,def:95,spa:60,spd:45,spe:35},desc:"体内充满毒瓦斯。身体轻飘飘的，会随风飘荡。"},
+  {id:110,name_zh:"双弹瓦斯",name_en:"Weezing",types:["毒"],height:1.2,weight:9.5,ability:"漂浮",stats:{hp:65,atk:90,def:120,spa:85,spd:70,spe:60},desc:"两个瓦斯弹连接而成。会释放出恶臭的毒瓦斯云团。"},
+  {id:111,name_zh:"独角犀牛",name_en:"Rhyhorn",types:["地面","岩石"],height:1.0,weight:115.0,ability:"避雷针",stats:{hp:80,atk:85,def:95,spa:30,spd:30,spe:25},desc:"虽然头脑简单，但力量惊人。一旦开始冲锋就不会停下来。"},
+  {id:112,name_zh:"钻角犀兽",name_en:"Rhydon",types:["地面","岩石"],height:1.9,weight:120.0,ability:"避雷针",stats:{hp:105,atk:130,def:120,spa:45,spd:45,spe:40},desc:"用钻头般的角连高楼大厦都能撞碎。尾巴抽打威力堪比地震。"},
+  {id:113,name_zh:"吉利蛋",name_en:"Chansey",types:["一般"],height:1.1,weight:34.6,ability:"自然回复",stats:{hp:250,atk:5,def:5,spa:35,spd:105,spe:50},desc:"一天能生好几个蛋。它的蛋不仅美味而且极富营养。"},
+  {id:114,name_zh:"蔓藤怪",name_en:"Tangela",types:["草"],height:1.0,weight:35.0,ability:"叶绿素",stats:{hp:65,atk:55,def:115,spa:100,spd:40,spe:60},desc:"身上的蓝色藤蔓会不断生长。被缠住就很难挣脱。"},
+  {id:115,name_zh:"袋兽",name_en:"Kangaskhan",types:["一般"],height:2.2,weight:80.0,ability:"早起",stats:{hp:105,atk:95,def:80,spa:40,spd:80,spe:90},desc:"腹部有育儿袋。袋中的幼崽会跟妈妈学习战斗。"},
+  {id:116,name_zh:"墨海马",name_en:"Horsea",types:["水"],height:0.4,weight:8.0,ability:"悠游自如",stats:{hp:30,atk:40,def:70,spa:70,spd:25,spe:60},desc:"擅长在珊瑚丛中隐蔽。口器能喷出墨汁迷惑敌人。"},
+  {id:117,name_zh:"海刺龙",name_en:"Seadra",types:["水"],height:1.2,weight:25.0,ability:"毒刺",stats:{hp:55,atk:65,def:95,spa:95,spd:45,spe:85},desc:"背上的尖刺有毒。会用嘴喷出强力的水枪穿透猎物。"},
+  {id:118,name_zh:"角金鱼",name_en:"Goldeen",types:["水"],height:0.6,weight:15.0,ability:"悠游自如",stats:{hp:45,atk:67,def:60,spa:35,spd:50,spe:63},desc:"尾巴优雅地摆动以优美的姿态游动。头顶的角用于战斗。"},
+  {id:119,name_zh:"金鱼王",name_en:"Seaking",types:["水"],height:1.3,weight:39.0,ability:"悠游自如",stats:{hp:80,atk:92,def:65,spa:65,spd:80,spe:68},desc:"秋天时会逆流而上产卵。头上的角在繁殖季节格外锐利。"},
+  {id:120,name_zh:"海星星",name_en:"Staryu",types:["水"],height:0.8,weight:34.5,ability:"恒净之躯",stats:{hp:30,atk:45,def:55,spa:70,spd:55,spe:85},desc:"即使被切碎也能再生。核心的红色宝石在夜间发光。"},
+  {id:121,name_zh:"宝石海星",name_en:"Starmie",types:["水","超能力"],height:1.1,weight:80.0,ability:"恒净之躯",stats:{hp:60,atk:75,def:85,spa:100,spd:85,spe:115},desc:"被称为「海洋之星」。核心的宝石发出七彩光芒。"},
+  {id:122,name_zh:"魔墙人偶",name_en:"Mr. Mime",types:["超能力","妖精"],height:1.3,weight:54.5,ability:"隔音",stats:{hp:40,atk:45,def:65,spa:100,spd:120,spe:90},desc:"擅长哑剧表演。用手指划出的空气墙可以抵挡攻击。"},
+  {id:123,name_zh:"飞天螳螂",name_en:"Scyther",types:["虫","飞行"],height:1.5,weight:56.0,ability:"虫之预感",stats:{hp:70,atk:110,def:80,spa:55,spd:80,spe:105},desc:"用镰刀般的前肢切割猎物。速度如忍者般迅速。"},
+  {id:124,name_zh:"迷唇姐",name_en:"Jynx",types:["冰","超能力"],height:1.4,weight:40.6,ability:"迟钝",stats:{hp:65,atk:50,def:35,spa:115,spd:95,spe:95},desc:"用奇妙的舞步迷惑对手。会哼唱催眠般的歌声。"},
+  {id:125,name_zh:"电击兽",name_en:"Electabuzz",types:["电"],height:1.1,weight:30.0,ability:"静电",stats:{hp:65,atk:83,def:57,spa:95,spd:85,spe:105},desc:"喜欢电能。会在发电厂附近出现。身体能积蓄高压电流。"},
+  {id:126,name_zh:"鸭嘴火兽",name_en:"Magmar",types:["火"],height:1.3,weight:44.5,ability:"火焰之躯",stats:{hp:65,atk:95,def:57,spa:100,spd:85,spe:93},desc:"体温高达1200°C。当它打喷嚏时会喷出火焰弹。"},
+  {id:127,name_zh:"凯罗斯",name_en:"Pinsir",types:["虫"],height:1.5,weight:55.0,ability:"怪力钳",stats:{hp:65,atk:125,def:100,spa:55,spd:70,spe:85},desc:"用两只大颚夹住猎物。一旦被夹住就极难挣脱。"},
+  {id:128,name_zh:"肯泰罗",name_en:"Tauros",types:["一般"],height:1.4,weight:88.4,ability:"威吓",stats:{hp:75,atk:100,def:95,spa:40,spd:70,spe:110},desc:"好战的性格。会用尾巴抽打自己来激发斗志。"},
+  {id:129,name_zh:"鲤鱼王",name_en:"Magikarp",types:["水"],height:0.9,weight:10.0,ability:"悠游自如",stats:{hp:20,atk:10,def:55,spa:15,spd:20,spe:80},desc:"实力极弱，只会溅起水花。被称为最弱的宝可梦。"},
+  {id:130,name_zh:"暴鲤龙",name_en:"Gyarados",types:["水","飞行"],height:6.5,weight:235.0,ability:"威吓",stats:{hp:95,atk:125,def:79,spa:60,spd:100,spe:81},desc:"从鲤鱼王进化而来。性情极度暴躁，会毫无理由地破坏。"},
+  {id:131,name_zh:"拉普拉斯",name_en:"Lapras",types:["水","冰"],height:2.5,weight:220.0,ability:"储水",stats:{hp:130,atk:85,def:80,spa:85,spd:95,spe:60},desc:"性格温和的海洋生物。背上的甲壳让人感觉舒适，喜欢载人渡海。"},
+  {id:132,name_zh:"百变怪",name_en:"Ditto",types:["一般"],height:0.3,weight:4.0,ability:"柔软",stats:{hp:48,atk:48,def:48,spa:48,spd:48,spe:48},desc:"能变身成任何东西。失败时细胞会松弛坍塌。"},
+  {id:133,name_zh:"伊布",name_en:"Eevee",types:["一般"],height:0.3,weight:6.5,ability:"逃跑",stats:{hp:55,atk:55,def:50,spa:45,spd:65,spe:55},desc:"基因极不稳定。会根据周围环境改变形态。"},
+  {id:134,name_zh:"水伊布",name_en:"Vaporeon",types:["水"],height:1.0,weight:29.0,ability:"储水",stats:{hp:130,atk:65,def:60,spa:110,spd:95,spe:65},desc:"身体细胞与水分子结构类似。溶于水中后完全隐形。"},
+  {id:135,name_zh:"雷伊布",name_en:"Jolteon",types:["电"],height:0.8,weight:24.5,ability:"蓄电",stats:{hp:65,atk:65,def:60,spa:110,spd:95,spe:130},desc:"全身的毛发竖立变成尖刺。释放静电时的声音如同雷鸣。"},
+  {id:136,name_zh:"火伊布",name_en:"Flareon",types:["火"],height:0.9,weight:25.0,ability:"引火",stats:{hp:65,atk:130,def:60,spa:95,spd:110,spe:65},desc:"体内有火焰袋。吸入空气后在体内燃烧产生热量。"},
+  {id:137,name_zh:"多边兽",name_en:"Porygon",types:["一般"],height:0.8,weight:36.5,ability:"复制",stats:{hp:65,atk:60,def:70,spa:85,spd:75,spe:40},desc:"首只完全由人工制造的宝可梦。可以在电子空间中自由移动。"},
+  {id:138,name_zh:"菊石兽",name_en:"Omanyte",types:["岩石","水"],height:0.4,weight:7.5,ability:"悠游自如",stats:{hp:35,atk:40,def:100,spa:90,spd:55,spe:35},desc:"从化石中复活。用触手吸附在岩石上移动。"},
+  {id:139,name_zh:"多刺菊石兽",name_en:"Omastar",types:["岩石","水"],height:1.0,weight:35.0,ability:"悠游自如",stats:{hp:70,atk:60,def:125,spa:115,spd:70,spe:55},desc:"据说在远古时代曾用触手捕捉猎物。壳上的刺用于防御。"},
+  {id:140,name_zh:"化石盔",name_en:"Kabuto",types:["岩石","水"],height:0.5,weight:11.5,ability:"悠游自如",stats:{hp:30,atk:80,def:90,spa:55,spd:45,spe:55},desc:"从化石中复活。用背上的甲壳保护自己。"},
+  {id:141,name_zh:"镰刀盔",name_en:"Kabutops",types:["岩石","水"],height:1.3,weight:40.5,ability:"悠游自如",stats:{hp:60,atk:115,def:105,spa:65,spd:70,spe:80},desc:"用锋利的镰刀切割猎物。形态与现代昆虫相似。"},
+  {id:142,name_zh:"化石翼龙",name_en:"Aerodactyl",types:["岩石","飞行"],height:1.8,weight:59.0,ability:"压迫感",stats:{hp:80,atk:105,def:65,spa:60,spd:75,spe:130},desc:"从琥珀中提取DNA复活。锯子般的牙齿能撕碎猎物。"},
+  {id:143,name_zh:"卡比兽",name_en:"Snorlax",types:["一般"],height:2.1,weight:460.0,ability:"免疫",stats:{hp:160,atk:110,def:65,spa:65,spd:110,spe:30},desc:"食量惊人，每天要吃掉400公斤的食物。吃饱了就睡。"},
+  {id:144,name_zh:"急冻鸟",name_en:"Articuno",types:["冰","飞行"],height:1.7,weight:55.4,ability:"压迫感",stats:{hp:90,atk:85,def:100,spa:95,spd:125,spe:85},desc:"传说中飞翔时能冻结空气水分的传说中的宝可梦。"},
+  {id:145,name_zh:"闪电鸟",name_en:"Zapdos",types:["电","飞行"],height:1.6,weight:52.6,ability:"压迫感",stats:{hp:90,atk:90,def:85,spa:125,spd:90,spe:100},desc:"传说中雷鸣电闪时出现的传说中的宝可梦。"},
+  {id:146,name_zh:"火焰鸟",name_en:"Moltres",types:["火","飞行"],height:2.0,weight:60.0,ability:"压迫感",stats:{hp:90,atk:100,def:90,spa:125,spd:85,spe:90},desc:"传说中春天来临时火焰鸟会迁徙，能让冰雪消融。"},
+  {id:147,name_zh:"迷你龙",name_en:"Dratini",types:["龙"],height:1.8,weight:3.3,ability:"蜕皮",stats:{hp:41,atk:64,def:45,spa:50,spd:50,spe:50},desc:"被称为传说中的宝可梦。会不断蜕皮成长。"},
+  {id:148,name_zh:"哈克龙",name_en:"Dragonair",types:["龙"],height:4.0,weight:16.5,ability:"蜕皮",stats:{hp:61,atk:84,def:65,spa:70,spd:70,spe:70},desc:"据说身上发出辉光时能操控天气。被称为神圣的存在。"},
+  {id:149,name_zh:"快龙",name_en:"Dragonite",types:["龙","飞行"],height:2.2,weight:210.0,ability:"精神力",stats:{hp:91,atk:134,def:95,spa:100,spd:100,spe:80},desc:"能以16小时绕地球一圈的速度飞行。智力与人类相当。"},
+  {id:150,name_zh:"超梦",name_en:"Mewtwo",types:["超能力"],height:2.0,weight:122.0,ability:"压迫感",stats:{hp:106,atk:110,def:90,spa:154,spd:90,spe:130},desc:"通过基因重组诞生的传说宝可梦。拥有最强的超能力。"},
+  {id:151,name_zh:"梦幻",name_en:"Mew",types:["超能力"],height:0.4,weight:4.0,ability:"同步",stats:{hp:100,atk:100,def:100,spa:100,spd:100,spe:100},desc:"拥有所有宝可梦的基因。能在空中优雅地飞行。"}
+];
+
+// ─── App State ───
+let currentId = null;
+
+// ─── Init Type Filters ───
+function initFilters() {
+  const cont = document.getElementById('typeFilters');
+  let html = `<span class="type-filter all-btn active" data-type="all" onclick="setFilter('all')">全部</span>`;
+  TYPE_LIST.forEach(t => {
+    const c = TYPE_COLORS[t];
+    html += `<span class="type-filter" data-type="${t}" style="background:${c}" onclick="setFilter('${t}')">${t}</span>`;
+  });
+  cont.innerHTML = html;
+}
+
+let activeFilter = 'all';
+
+function setFilter(type) {
+  activeFilter = type;
+  document.querySelectorAll('.type-filter').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll(`.type-filter[data-type="${type}"]`).forEach(el => el.classList.add('active'));
+  renderGrid();
+}
+
+// ─── Render Grid ───
+function renderGrid() {
+  const query = document.getElementById('searchInput').value.trim().toLowerCase();
+  const grid = document.getElementById('pkmnGrid');
+  let filtered = POKEMON.filter(p => {
+    if (activeFilter !== 'all' && !p.types.includes(activeFilter)) return false;
+    if (query) {
+      const nStr = String(p.id).padStart(3,'0');
+      const match = p.name_zh.includes(query) || p.name_en.toLowerCase().includes(query) || nStr === query;
+      if (!match) return false;
+    }
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty-state"><div class="emoji">🔍</div><p>没有找到匹配的宝可梦</p></div>`;
+    return;
+  }
+
+  let html = '';
+  filtered.forEach(p => {
+    const c = TYPE_COLORS[p.types[0]] || '#A8A878';
+    const spriteStyle = getSpriteStyle(p.id, 2);
+    const typesHtml = p.types.map(t => `<span class="type-badge" style="background:${TYPE_COLORS[t]||'#999'}">${t}</span>`).join('');
+    html += `
+      <div class="pkmn-card" style="--card-color:${c}" onclick="openModal(${p.id})">
+        <div class="num">#${String(p.id).padStart(3,'0')}</div>
+        <div class="sprite-area" style="--card-bg:${c}22">
+          <div class="pkmn-sprite" style="${spriteStyle}"></div>
+        </div>
+        <div class="name">${p.name_zh}</div>
+        <div class="name-en">${p.name_en}</div>
+        <div class="types">${typesHtml}</div>
+      </div>`;
+  });
+  grid.innerHTML = html;
+}
+
+// ─── Modal ───
+function openModal(id) {
+  currentId = id;
+  const p = POKEMON.find(x => x.id === id);
+  if (!p) return;
+
+  const c = TYPE_COLORS[p.types[0]] || '#A8A878';
+  const spriteStyleMD = getSpriteStyle(p.id, 3);
+
+  document.getElementById('modalNum').textContent = `#${String(p.id).padStart(3,'0')}`;
+  document.getElementById('modalName').textContent = p.name_zh;
+  document.getElementById('modalNameEn').textContent = p.name_en;
+  document.getElementById('modalTop').style.background = `linear-gradient(135deg, ${c} 0%, ${adjustColor(c,-30)} 100%)`;
+
+  document.getElementById('modalTypes').innerHTML = p.types.map(t =>
+    `<span class="type-badge-lg" style="background:${TYPE_COLORS[t]||'#999'}">${t}</span>`
+  ).join('');
+
+  document.getElementById('modalSprite').innerHTML = '<div class="pkmn-sprite" style="'+spriteStyleMD+'"></div>';
+
+  document.getElementById('modalHeight').textContent = `${p.height} m`;
+  document.getElementById('modalWeight').textContent = `${p.weight} kg`;
+  document.getElementById('modalAbility').textContent = p.ability;
+
+  document.getElementById('modalDesc').innerHTML = `${p.desc}<br><span class="ability">特性：${p.ability}</span>`;
+
+  // Stats
+  const stats = [
+    {label:'HP',key:'hp'},{label:'攻击',key:'atk'},{label:'防御',key:'def'},
+    {label:'特攻',key:'spa'},{label:'特防',key:'spd'},{label:'速度',key:'spe'}
+  ];
+  const maxStat = 255;
+  let statsHtml = '';
+  let total = 0;
+  stats.forEach(s => {
+    const val = p.stats[s.key];
+    total += val;
+    const pct = Math.min(val / maxStat * 100, 100);
+    const statColor = val < 50 ? '#DC0A2D' : val < 90 ? '#F08030' : val < 130 ? '#78C850' : '#6890F0';
+    statsHtml += `
+      <div class="stat-row">
+        <span class="stat-label">${s.label}</span>
+        <span class="stat-val">${val}</span>
+        <div class="stat-bar-bg"><div class="stat-bar" style="background:${statColor};--bar-w:${pct}%"></div></div>
+      </div>`;
+  });
+  document.getElementById('modalStats').innerHTML = statsHtml;
+  document.getElementById('modalTotal').textContent = total;
+
+  // Nav buttons
+  document.getElementById('prevBtn').disabled = id <= 1;
+  document.getElementById('nextBtn').disabled = id >= 151;
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function navPokemon(dir) {
+  const next = currentId + dir;
+  if (next < 1 || next > 151) return;
+  openModal(next);
+}
+
+// Close on overlay click
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Keyboard
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+  if (document.getElementById('modalOverlay').classList.contains('open')) {
+    if (e.key === 'ArrowLeft') navPokemon(-1);
+    if (e.key === 'ArrowRight') navPokemon(1);
+  }
+});
+
+// ─── Color Helper ───
+function adjustColor(hex, amount) {
+  const r = Math.max(0, Math.min(255, parseInt(hex.slice(1,3),16) + amount));
+  const g = Math.max(0, Math.min(255, parseInt(hex.slice(3,5),16) + amount));
+  const b = Math.max(0, Math.min(255, parseInt(hex.slice(5,7),16) + amount));
+  return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+}
+
+// ─── Init ───
+initFilters();
+renderGrid();
+</script>
+</body>
+</html>
