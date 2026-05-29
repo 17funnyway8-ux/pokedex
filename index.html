@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>宝可梦图鉴 | 151</title>
+<title>宝可梦图鉴 | 251</title>
 <style>
   :root {
     --pokedex-red: #DC0A2D;
@@ -549,7 +549,7 @@
 </div>
 
 <div class="footer">
-  宝可梦 151 — 数据本地嵌入 · 无需联网
+  宝可梦 251 — 数据本地嵌入 · 无需联网
 </div>
 
 <!-- Detail Modal -->
@@ -984,7 +984,7 @@ function openModal(id) {
 
   // Nav buttons
   document.getElementById('prevBtn').disabled = id <= 1;
-  document.getElementById('nextBtn').disabled = id >= 151;
+  document.getElementById('nextBtn').disabled = id >= 251;
 
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -997,7 +997,7 @@ function closeModal() {
 
 function navPokemon(dir) {
   const next = currentId + dir;
-  if (next < 1 || next > 151) return;
+  if (next < 1 || next > 251) return;
   openModal(next);
 }
 
