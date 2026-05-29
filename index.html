@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>初代宝可梦图鉴 | 151</title>
+<title>宝可梦图鉴 | 151</title>
 <style>
   :root {
     --pokedex-red: #DC0A2D;
@@ -531,8 +531,8 @@
 <div class="header">
   <div class="header-inner">
     <h1>
-      🎮 初代宝可梦图鉴
-      <span class="count">151 / 151</span>
+      🎮 宝可梦图鉴
+      <span class="count">251 / 251</span>
     </h1>
     <div class="header-actions">
       <div class="search-wrap">
@@ -549,7 +549,7 @@
 </div>
 
 <div class="footer">
-  初代宝可梦 151 — 数据本地嵌入 · 无需联网
+  宝可梦 151 — 数据本地嵌入 · 无需联网
 </div>
 
 <!-- Detail Modal -->
@@ -770,8 +770,107 @@ const POKEMON = [
   {id:148,name_zh:"哈克龙",name_en:"Dragonair",types:["龙"],height:4.0,weight:16.5,ability:"蜕皮",stats:{hp:61,atk:84,def:65,spa:70,spd:70,spe:70},desc:"据说身上发出辉光时能操控天气。被称为神圣的存在。"},
   {id:149,name_zh:"快龙",name_en:"Dragonite",types:["龙","飞行"],height:2.2,weight:210.0,ability:"精神力",stats:{hp:91,atk:134,def:95,spa:100,spd:100,spe:80},desc:"能以16小时绕地球一圈的速度飞行。智力与人类相当。"},
   {id:150,name_zh:"超梦",name_en:"Mewtwo",types:["超能力"],height:2.0,weight:122.0,ability:"压迫感",stats:{hp:106,atk:110,def:90,spa:154,spd:90,spe:130},desc:"通过基因重组诞生的传说宝可梦。拥有最强的超能力。"},
-  {id:151,name_zh:"梦幻",name_en:"Mew",types:["超能力"],height:0.4,weight:4.0,ability:"同步",stats:{hp:100,atk:100,def:100,spa:100,spd:100,spe:100},desc:"拥有所有宝可梦的基因。能在空中优雅地飞行。"}
-];
+  {id:151,name_zh:"梦幻",name_en:"Mew",types:["超能力"],height:0.4,weight:4.0,ability:"同步",stats:{hp:100,atk:100,def:100,spa:100,spd:100,spe:100},desc:"拥有所有宝可梦的基因。能在空中优雅地飞行。"},
+  {id:152,name_zh:"菊草叶",name_en:"chikorita",types:["草"],height:0.9,weight:6.4,ability:"茂盛",stats:{hp:45,atk:49,def:65,spa:49,spd:65,spe:45},desc:"头上长出的叶子能感知周围的温度和湿度。喜欢温暖的阳光。"},
+  {id:153,name_zh:"月桂叶",name_en:"bayleef",types:["草"],height:1.2,weight:15.8,ability:"茂盛",stats:{hp:60,atk:62,def:80,spa:63,spd:80,spe:60},desc:"脖子上发出的香气能振奋人心。会通过摇晃脖子上的叶子来威吓对手。"},
+  {id:154,name_zh:"大竺葵",name_en:"meganium",types:["草"],height:1.7,weight:100.5,ability:"茂盛",stats:{hp:80,atk:82,def:100,spa:83,spd:100,spe:80},desc:"花朵释放出的香气能治愈心灵。据说会为了守护花朵而战斗。"},
+  {id:155,name_zh:"火球鼠",name_en:"cyndaquil",types:["火"],height:0.5,weight:7.9,ability:"猛火",stats:{hp:39,atk:52,def:43,spa:60,spd:50,spe:65},desc:"性格温和，但背上的火焰在遇险时会猛烈燃烧。"},
+  {id:156,name_zh:"火岩鼠",name_en:"quilava",types:["火"],height:0.9,weight:19.0,ability:"猛火",stats:{hp:58,atk:64,def:58,spa:80,spd:65,spe:80},desc:"用高速旋转身体来释放火焰。背上的火焰在愤怒时变得更旺。"},
+  {id:157,name_zh:"火爆兽",name_en:"typhlosion",types:["火"],height:1.7,weight:79.5,ability:"猛火",stats:{hp:78,atk:84,def:78,spa:109,spd:85,spe:100},desc:"会喷出高温火焰进行攻击。爆发出的热量能让周围的空气扭曲。"},
+  {id:158,name_zh:"小锯鳄",name_en:"totodile",types:["水"],height:0.6,weight:9.5,ability:"激流",stats:{hp:50,atk:65,def:64,spa:44,spd:48,spe:43},desc:"性格好斗，会用发达的下颚咬住任何移动的东西。"},
+  {id:159,name_zh:"蓝鳄",name_en:"croconaw",types:["水"],height:1.1,weight:25.0,ability:"激流",stats:{hp:65,atk:80,def:80,spa:59,spd:63,spe:58},desc:"巨大的嘴巴咬合力惊人。一旦咬住就不会松口。"},
+  {id:160,name_zh:"大力鳄",name_en:"feraligatr",types:["水"],height:2.3,weight:88.8,ability:"激流",stats:{hp:85,atk:105,def:100,spa:79,spd:83,spe:78},desc:"会用粗壮的四肢和巨大的下颚秒杀猎物。咬碎一切阻挡它的东西。"},
+  {id:161,name_zh:"尾立",name_en:"sentret",types:["一般"],height:0.8,weight:6.0,ability:"逃跑",stats:{hp:35,atk:46,def:34,spa:35,spd:45,spe:20},desc:"警惕性极高。会用尾巴支撑身体，随时观察周围动静。"},
+  {id:162,name_zh:"大尾立",name_en:"furret",types:["一般"],height:1.8,weight:32.5,ability:"逃跑",stats:{hp:85,atk:76,def:64,spa:45,spd:55,spe:90},desc:"拥有修长的身体和敏捷的动作。会快速穿梭追捕猎物。"},
+  {id:163,name_zh:"咕咕",name_en:"hoothoot",types:["一般","飞行"],height:0.7,weight:21.2,ability:"不眠",stats:{hp:60,atk:30,def:30,spa:36,spd:56,spe:50},desc:"每到特定时间就会准时鸣叫。时钟般精准的生物钟令人惊叹。"},
+  {id:164,name_zh:"猫头夜鹰",name_en:"noctowl",types:["一般","飞行"],height:1.6,weight:40.8,ability:"不眠",stats:{hp:100,atk:50,def:50,spa:86,spd:96,spe:70},desc:"翅膀无声。双眼在黑暗中也能看清事物。"},
+  {id:165,name_zh:"芭瓢虫",name_en:"ledyba",types:["虫","飞行"],height:1.0,weight:10.8,ability:"虫之预感",stats:{hp:40,atk:20,def:30,spa:40,spd:80,spe:55},desc:"背上的斑点会随着成长而变化。会洒落带有恶臭的粉末。"},
+  {id:166,name_zh:"安瓢虫",name_en:"ledian",types:["虫","飞行"],height:1.4,weight:35.6,ability:"虫之预感",stats:{hp:55,atk:35,def:50,spa:55,spd:110,spe:85},desc:"会用星星般的手脚发出信号与同伴交流。"},
+  {id:167,name_zh:"线球",name_en:"spinarak",types:["虫","毒"],height:0.5,weight:8.5,ability:"虫之预感",stats:{hp:40,atk:60,def:40,spa:40,spd:40,spe:30},desc:"用丝线织成陷阱捕捉猎物。耐心是它最大的武器。"},
+  {id:168,name_zh:"阿利多斯",name_en:"ariados",types:["虫","毒"],height:1.1,weight:33.5,ability:"虫之预感",stats:{hp:70,atk:90,def:70,spa:60,spd:70,spe:40},desc:"用又细又结实的丝线织成陷阱。静静等待猎物上钩。"},
+  {id:169,name_zh:"叉字蝠",name_en:"crobat",types:["毒","飞行"],height:1.8,weight:75.0,ability:"精神力",stats:{hp:85,atk:90,def:80,spa:70,spd:80,spe:130},desc:"翅膀增加到两对，飞行速度大幅提升。能以超音速飞行。"},
+  {id:170,name_zh:"灯笼鱼",name_en:"chinchou",types:["水","电"],height:0.5,weight:12.0,ability:"蓄电",stats:{hp:75,atk:38,def:38,spa:56,spd:56,spe:67},desc:"触手的灯能发出明亮的光。用光吸引猎物然后放电攻击。"},
+  {id:171,name_zh:"电灯怪",name_en:"lanturn",types:["水","电"],height:1.2,weight:22.5,ability:"蓄电",stats:{hp:125,atk:58,def:58,spa:76,spd:76,spe:67},desc:"光明亮到能穿透深海。被称为深海中的宝石。"},
+  {id:172,name_zh:"皮丘",name_en:"pichu",types:["电"],height:0.3,weight:2.0,ability:"静电",stats:{hp:20,atk:40,def:15,spa:35,spd:35,spe:60},desc:"身体小巧但能释放强电。脸颊的电力袋还未完全发育。"},
+  {id:173,name_zh:"皮宝宝",name_en:"cleffa",types:["妖精"],height:0.3,weight:3.0,ability:"迷人之躯",stats:{hp:50,atk:25,def:28,spa:45,spd:55,spe:15},desc:"据说会聚集在流星坠落的地方跳舞。吸收星辰的能量。"},
+  {id:174,name_zh:"宝宝丁",name_en:"igglybuff",types:["一般","妖精"],height:0.3,weight:1.0,ability:"迷人之躯",stats:{hp:90,atk:30,def:15,spa:40,spd:20,spe:15},desc:"歌声温柔动听的宝宝宝可梦。天生就擅长唱摇篮曲。"},
+  {id:175,name_zh:"波克比",name_en:"togepi",types:["妖精"],height:0.3,weight:1.5,ability:"活力",stats:{hp:35,atk:20,def:65,spa:40,spd:65,spe:20},desc:"壳里充满幸福能量。据说会给善待它的人带来好运。"},
+  {id:176,name_zh:"波克基古",name_en:"togetic",types:["妖精","飞行"],height:0.6,weight:3.2,ability:"活力",stats:{hp:55,atk:40,def:85,spa:80,spd:105,spe:40},desc:"不会出现在纷争之地。据说会为了帮助弱小而降临。"},
+  {id:177,name_zh:"天然雀",name_en:"natu",types:["超能力","飞行"],height:0.2,weight:2.0,ability:"同步",stats:{hp:40,atk:50,def:45,spa:70,spd:45,spe:70},desc:"眼睛具有透视能力。一动不动地盯着什么的时候一定是在看什么。"},
+  {id:178,name_zh:"天然鸟",name_en:"xatu",types:["超能力","飞行"],height:1.5,weight:15.0,ability:"同步",stats:{hp:65,atk:75,def:70,spa:95,spd:70,spe:95},desc:"能看穿过去和未来。据说用它脱落的羽毛做成的书签能让人不掉书。"},
+  {id:179,name_zh:"咩利羊",name_en:"mareep",types:["电"],height:0.6,weight:7.8,ability:"静电",stats:{hp:55,atk:40,def:40,spa:65,spd:45,spe:35},desc:"摩擦体毛能产生静电。身上的毛越多产生的电量越大。"},
+  {id:180,name_zh:"茸茸羊",name_en:"flaaffy",types:["电"],height:0.8,weight:13.3,ability:"静电",stats:{hp:70,atk:55,def:55,spa:80,spd:60,spe:45},desc:"身上的毛是电的良导体。用电击驱赶敌人。"},
+  {id:181,name_zh:"电龙",name_en:"ampharos",types:["电"],height:1.4,weight:61.5,ability:"静电",stats:{hp:90,atk:75,def:85,spa:115,spd:90,spe:55},desc:"尾巴发出的光能照亮整个城镇。传说中能照亮黑暗。"},
+  {id:182,name_zh:"美丽花",name_en:"bellossom",types:["草"],height:0.4,weight:5.8,ability:"叶绿素",stats:{hp:75,atk:80,def:95,spa:90,spd:100,spe:50},desc:"随着欢快的音乐起舞。据说在热带地区会跳更热烈的舞蹈。"},
+  {id:183,name_zh:"玛力露",name_en:"marill",types:["水","妖精"],height:0.4,weight:8.5,ability:"厚脂肪",stats:{hp:70,atk:20,def:50,spa:20,spd:50,spe:40},desc:"尾巴可以当救生圈使用。充满气的尾巴能帮助它在水面上漂浮。"},
+  {id:184,name_zh:"玛力露丽",name_en:"azumarill",types:["水","妖精"],height:0.8,weight:28.5,ability:"厚脂肪",stats:{hp:100,atk:50,def:80,spa:60,spd:80,spe:50},desc:"长长的耳朵是力气的来源。能轻松举起比自身重数倍的岩石。"},
+  {id:185,name_zh:"树才怪",name_en:"sudowoodo",types:["岩石"],height:1.2,weight:38.0,ability:"坚硬脑袋",stats:{hp:70,atk:100,def:115,spa:30,spd:65,spe:30},desc:"虽然外形像树但实际是岩石属性。雨天的身体会变成翠绿色。"},
+  {id:186,name_zh:"蚊香蛙皇",name_en:"politoed",types:["水"],height:1.1,weight:33.9,ability:"储水",stats:{hp:90,atk:75,def:75,spa:90,spd:100,spe:70},desc:"叫声在蚊香蝌蚪听来如同号令。所有的蚊香蝌蚪都会聚集过来。"},
+  {id:187,name_zh:"毽子草",name_en:"hoppip",types:["草","飞行"],height:0.4,weight:0.5,ability:"叶绿素",stats:{hp:35,atk:35,def:40,spa:35,spd:55,spe:50},desc:"非常轻，会被风吹走。会随风飘到很远的地方去。"},
+  {id:188,name_zh:"毽子花",name_en:"skiploom",types:["草","飞行"],height:0.6,weight:1.0,ability:"叶绿素",stats:{hp:55,atk:45,def:50,spa:45,spd:65,spe:80},desc:"利用头上的花来捕捉风。随风飘移寻找温暖的地区。"},
+  {id:189,name_zh:"毽子棉",name_en:"jumpluff",types:["草","飞行"],height:0.8,weight:3.0,ability:"叶绿素",stats:{hp:75,atk:55,def:70,spa:55,spd:95,spe:110},desc:"棉絮随风飘扬。飘到海上时会被鲤鱼王误食。"},
+  {id:190,name_zh:"长尾怪手",name_en:"aipom",types:["一般"],height:0.8,weight:11.5,ability:"捡拾",stats:{hp:55,atk:70,def:55,spa:40,spd:55,spe:85},desc:"用尾巴勾住树枝移动。以灵活的身手在树间穿梭。"},
+  {id:191,name_zh:"向日种子",name_en:"sunkern",types:["草"],height:0.3,weight:1.8,ability:"叶绿素",stats:{hp:30,atk:30,def:30,spa:30,spd:30,spe:30},desc:"只靠叶子吸收的阳光生存。会一动不动地沐浴阳光。"},
+  {id:192,name_zh:"向日花怪",name_en:"sunflora",types:["草"],height:0.8,weight:8.5,ability:"叶绿素",stats:{hp:75,atk:75,def:55,spa:105,spd:85,spe:30},desc:"将阳光转化为能量。花瓣的排列能高效吸收光能。"},
+  {id:193,name_zh:"洋洋玛",name_en:"yanma",types:["虫","飞行"],height:1.2,weight:38.0,ability:"复眼",stats:{hp:65,atk:65,def:45,spa:75,spd:45,spe:95},desc:"翅膀扇动速度极快。能用翅膀制造出强烈的冲击波。"},
+  {id:194,name_zh:"乌波",name_en:"wooper",types:["水","地面"],height:0.4,weight:8.5,ability:"湿气",stats:{hp:55,atk:45,def:45,spa:25,spd:25,spe:15},desc:"在冰冷的水中生活。皮肤会分泌有毒的黏膜保护自己。"},
+  {id:195,name_zh:"沼王",name_en:"quagsire",types:["水","地面"],height:1.4,weight:75.0,ability:"湿气",stats:{hp:95,atk:85,def:85,spa:65,spd:65,spe:35},desc:"悠闲的游泳者。就算撞上船底也不会在意，继续游走。"},
+  {id:196,name_zh:"太阳伊布",name_en:"espeon",types:["超能力"],height:0.9,weight:26.5,ability:"同步",stats:{hp:65,atk:65,def:60,spa:130,spd:95,spe:110},desc:"用精神力量操纵空气粒子。据说能从额头的宝石发射精神力量。"},
+  {id:197,name_zh:"月亮伊布",name_en:"umbreon",types:["恶"],height:1.0,weight:27.0,ability:"同步",stats:{hp:95,atk:65,def:110,spa:60,spd:130,spe:65},desc:"沐浴月亮能量后进化。全身的环在月光下会发光。"},
+  {id:198,name_zh:"黑暗鸦",name_en:"murkrow",types:["恶","飞行"],height:0.5,weight:2.1,ability:"不眠",stats:{hp:40,atk:50,def:35,spa:30,spd:45,spe:91},desc:"追逐闪亮的东西。喜欢收集亮晶晶的小物品。"},
+  {id:199,name_zh:"呆呆王",name_en:"slowking",types:["水","超能力"],height:2.0,weight:79.5,ability:"迟钝",stats:{hp:95,atk:75,def:80,spa:100,spd:110,spe:30},desc:"被大舌贝咬头后变得异常聪明。知识广博得令人惊叹。"},
+  {id:200,name_zh:"梦妖",name_en:"misdreavus",types:["幽灵"],height:0.7,weight:1.0,ability:"漂浮",stats:{hp:60,atk:60,def:60,spa:85,spd:85,spe:85},desc:"喜欢恶作剧。会发出诡异的叫声吓唬人类。"},
+  {id:201,name_zh:"未知图腾",name_en:"unown",types:["超能力"],height:0.5,weight:5.0,ability:"漂浮",stats:{hp:48,atk:72,def:48,spa:72,spd:48,spe:48},desc:"身体酷似古代文字的符号。至今无人能解开它的谜团。"},
+  {id:202,name_zh:"果然翁",name_en:"wobbuffet",types:["超能力"],height:1.3,weight:28.5,ability:"踩影",stats:{hp:190,atk:33,def:58,spa:33,spd:58,spe:33},desc:"讨厌受到攻击时会膨胀。会躲在角落里暗中观察。"},
+  {id:203,name_zh:"麒麟奇",name_en:"girafarig",types:["一般","超能力"],height:1.5,weight:41.5,ability:"精神力",stats:{hp:70,atk:80,def:65,spa:90,spd:65,spe:85},desc:"尾巴的脑子也有独立意识。头尾配合默契。"},
+  {id:204,name_zh:"榛果球",name_en:"pineco",types:["虫"],height:0.6,weight:7.2,ability:"坚硬脑袋",stats:{hp:50,atk:65,def:90,spa:35,spd:35,spe:15},desc:"挂在树上看起来像果实。一旦受惊就会自爆。"},
+  {id:205,name_zh:"佛烈托斯",name_en:"forretress",types:["虫","钢"],height:1.2,weight:125.8,ability:"坚硬脑袋",stats:{hp:75,atk:90,def:140,spa:60,spd:60,spe:40},desc:"外壳像钢铁一样坚硬。用嘴喷出气体推进移动。"},
+  {id:206,name_zh:"土龙弟弟",name_en:"dunsparce",types:["一般"],height:1.5,weight:14.0,ability:"天恩",stats:{hp:100,atk:70,def:70,spa:65,spd:65,spe:45},desc:"用尾巴挖沙前进。一旦开始挖洞就不会回头。"},
+  {id:207,name_zh:"天蝎",name_en:"gligar",types:["地面","飞行"],height:1.1,weight:64.8,ability:"怪力钳",stats:{hp:65,atk:75,def:105,spa:35,spd:65,spe:85},desc:"用巨大的钳子威吓敌人。会悄无声息地从上空袭击。"},
+  {id:208,name_zh:"大钢蛇",name_en:"steelix",types:["钢","地面"],height:9.2,weight:400.0,ability:"坚硬脑袋",stats:{hp:75,atk:85,def:200,spa:55,spd:65,spe:30},desc:"身体比金刚石还硬。在地下挖掘时会引起地震。"},
+  {id:209,name_zh:"布鲁",name_en:"snubbull",types:["妖精"],height:0.6,weight:7.8,ability:"威吓",stats:{hp:60,atk:80,def:50,spa:40,spd:40,spe:30},desc:"看起来很凶猛但其实很胆小。会装出凶狠的样子吓唬人。"},
+  {id:210,name_zh:"布鲁皇",name_en:"granbull",types:["妖精"],height:1.4,weight:48.7,ability:"威吓",stats:{hp:90,atk:120,def:75,spa:60,spd:60,spe:45},desc:"外表凶恶但内心善良。深受女性训练家欢迎。"},
+  {id:211,name_zh:"千针鱼",name_en:"qwilfish",types:["水","毒"],height:0.5,weight:3.9,ability:"毒刺",stats:{hp:65,atk:95,def:85,spa:55,spd:55,spe:85},desc:"浑身布满毒刺。被刺中后会感到剧痛。"},
+  {id:212,name_zh:"巨钳螳螂",name_en:"scizor",types:["虫","钢"],height:1.8,weight:118.0,ability:"虫之预感",stats:{hp:70,atk:130,def:100,spa:55,spd:80,spe:65},desc:"红色的身体如同铠甲。巨大的钳子能夹碎岩石。"},
+  {id:213,name_zh:"壶壶",name_en:"shuckle",types:["虫","岩石"],height:0.6,weight:20.5,ability:"贪吃鬼",stats:{hp:20,atk:10,def:230,spa:10,spd:230,spe:5},desc:"外壳非常坚硬。会收集树果存放在壳中进行发酵。"},
+  {id:214,name_zh:"赫拉克罗斯",name_en:"heracross",types:["虫","格斗"],height:1.5,weight:54.0,ability:"虫之预感",stats:{hp:80,atk:125,def:75,spa:40,spd:95,spe:85},desc:"会用发达的大角将对手抛向高空。拥有能将大树折断的力量。"},
+  {id:215,name_zh:"狃拉",name_en:"sneasel",types:["恶","冰"],height:0.9,weight:28.0,ability:"精神力",stats:{hp:55,atk:95,def:55,spa:35,spd:75,spe:115},desc:"用利爪攻击对手。在树皮上留下的爪痕是领地的标记。"},
+  {id:216,name_zh:"熊宝宝",name_en:"teddiursa",types:["一般"],height:0.6,weight:8.8,ability:"捡拾",stats:{hp:60,atk:80,def:50,spa:50,spd:50,spe:40},desc:"喜欢蜂蜜。会循着蜜蜂的轨迹找到蜂巢。"},
+  {id:217,name_zh:"圈圈熊",name_en:"ursaring",types:["一般"],height:1.8,weight:125.8,ability:"毅力",stats:{hp:90,atk:130,def:75,spa:75,spd:75,spe:55},desc:"拥有惊人力气。能用单爪使大树连根拔起。"},
+  {id:218,name_zh:"熔岩虫",name_en:"slugma",types:["火"],height:0.7,weight:35.0,ability:"火焰之躯",stats:{hp:40,atk:40,def:40,spa:70,spd:40,spe:20},desc:"由岩浆构成。摄氏1万度的高温能让周围燃烧。"},
+  {id:219,name_zh:"熔岩蜗牛",name_en:"magcargo",types:["火","岩石"],height:0.8,weight:55.0,ability:"火焰之躯",stats:{hp:60,atk:50,def:120,spa:90,spd:80,spe:30},desc:"背上的壳是用岩浆冷却后形成的。触手喷出火焰。"},
+  {id:220,name_zh:"小山猪",name_en:"swinub",types:["冰","地面"],height:0.4,weight:6.5,ability:"迟钝",stats:{hp:50,atk:50,def:40,spa:30,spd:30,spe:50},desc:"用鼻子摩擦地面觅食。鼻子非常灵敏。"},
+  {id:221,name_zh:"长毛猪",name_en:"piloswine",types:["冰","地面"],height:1.1,weight:55.8,ability:"迟钝",stats:{hp:100,atk:100,def:80,spa:60,spd:60,spe:50},desc:"浓密的体毛能抵御严寒。会用象牙挖开冻土找食物。"},
+  {id:222,name_zh:"太阳珊瑚",name_en:"corsola",types:["水","岩石"],height:0.6,weight:5.0,ability:"活力",stats:{hp:65,atk:55,def:95,spa:65,spd:95,spe:35},desc:"对水质非常敏感。生活在清洁的海域中。"},
+  {id:223,name_zh:"铁炮鱼",name_en:"remoraid",types:["水"],height:0.6,weight:12.8,ability:"活力",stats:{hp:35,atk:65,def:35,spa:65,spd:35,spe:65},desc:"从嘴里高速喷水击落飞行中的猎物。"},
+  {id:224,name_zh:"章鱼桶",name_en:"octillery",types:["水"],height:0.9,weight:28.5,ability:"吸盘",stats:{hp:75,atk:105,def:75,spa:105,spd:75,spe:45},desc:"用吸盘牢牢抓住猎物。坚硬的喙能啄碎一切。"},
+  {id:225,name_zh:"信使鸟",name_en:"delibird",types:["冰","飞行"],height:0.9,weight:16.0,ability:"活力",stats:{hp:45,atk:55,def:45,spa:65,spd:45,spe:75},desc:"尾巴的袋子里装着食物。会把自己的食物分给遇险的人。"},
+  {id:226,name_zh:"巨翅飞鱼",name_en:"mantine",types:["水","飞行"],height:2.1,weight:220.0,ability:"悠游自如",stats:{hp:85,atk:40,def:70,spa:80,spd:140,spe:70},desc:"优雅地在海面上游动。会让铁炮鱼附着在身上清洁。"},
+  {id:227,name_zh:"盔甲鸟",name_en:"skarmory",types:["钢","飞行"],height:1.7,weight:50.5,ability:"锐利目光",stats:{hp:65,atk:80,def:140,spa:40,spd:70,spe:70},desc:"全身披覆钢铁般的羽毛。旧羽毛脱落后会作为刀具使用。"},
+  {id:228,name_zh:"戴鲁比",name_en:"houndour",types:["恶","火"],height:0.6,weight:10.8,ability:"早起",stats:{hp:45,atk:60,def:30,spa:80,spd:50,spe:65},desc:"会互相呼应着嗥叫。用尖锐的叫声威吓对手。"},
+  {id:229,name_zh:"黑鲁加",name_en:"houndoom",types:["恶","火"],height:1.4,weight:35.0,ability:"早起",stats:{hp:75,atk:90,def:50,spa:110,spd:80,spe:95},desc:"会喷出地狱般的火焰。一旦盯上猎物就不死不休。"},
+  {id:230,name_zh:"刺龙王",name_en:"kingdra",types:["水","龙"],height:1.8,weight:152.0,ability:"悠游自如",stats:{hp:75,atk:95,def:95,spa:95,spd:95,spe:85},desc:"能引发漩涡。沉睡在深海的海底洞穴中。"},
+  {id:231,name_zh:"小小象",name_en:"phanpy",types:["地面"],height:0.5,weight:33.5,ability:"捡拾",stats:{hp:90,atk:60,def:60,spa:40,spd:40,spe:40},desc:"皮肤很厚。用鼻子爱抚同伴来表达感情。"},
+  {id:232,name_zh:"顿甲",name_en:"donphan",types:["地面"],height:1.1,weight:120.0,ability:"坚硬脑袋",stats:{hp:90,atk:120,def:120,spa:60,spd:60,spe:50},desc:"坚硬的皮肤如同铠甲。会用象牙和鼻子进行攻击。"},
+  {id:233,name_zh:"多边兽Ⅱ",name_en:"porygon2",types:["一般"],height:0.6,weight:32.5,ability:"下载",stats:{hp:85,atk:80,def:90,spa:105,spd:95,spe:60},desc:"多边兽的进化型。增加了程序后性能大幅提升。"},
+  {id:234,name_zh:"惊角鹿",name_en:"stantler",types:["一般"],height:1.4,weight:71.2,ability:"威吓",stats:{hp:73,atk:95,def:62,spa:85,spd:65,spe:85},desc:"角的形状会随季节变化。会被误认为森林的神明。"},
+  {id:235,name_zh:"图图犬",name_en:"smeargle",types:["一般"],height:1.2,weight:58.0,ability:"技术高手",stats:{hp:55,atk:20,def:35,spa:20,spd:45,spe:75},desc:"尾巴尖分泌的颜料可用于绘制。会模仿任何招式。"},
+  {id:236,name_zh:"无畏小子",name_en:"tyrogue",types:["格斗"],height:0.7,weight:21.0,ability:"毅力",stats:{hp:35,atk:35,def:35,spa:35,spd:35,spe:35},desc:"精力充沛。为了变得更强会不断挑战强大的对手。"},
+  {id:237,name_zh:"战舞郎",name_en:"hitmontop",types:["格斗"],height:1.4,weight:48.0,ability:"威吓",stats:{hp:50,atk:95,def:95,spa:35,spd:110,spe:70},desc:"以高速旋转的方式战斗。打倒敌人后会跳胜利之舞。"},
+  {id:238,name_zh:"迷唇娃",name_en:"smoochum",types:["冰","超能力"],height:0.4,weight:6.0,ability:"迟钝",stats:{hp:45,atk:30,def:15,spa:85,spd:65,spe:65},desc:"嘴唇是感知味道的器官。会用嘴唇触碰物体来辨别。"},
+  {id:239,name_zh:"电击怪",name_en:"elekid",types:["电"],height:0.6,weight:23.5,ability:"静电",stats:{hp:45,atk:63,def:37,spa:65,spd:55,spe:95},desc:"双臂转动发电。电力在强的时候肌肉也会膨胀。"},
+  {id:240,name_zh:"鸭嘴宝宝",name_en:"magby",types:["火"],height:0.7,weight:21.4,ability:"火焰之躯",stats:{hp:45,atk:75,def:37,spa:70,spd:55,spe:83},desc:"从嘴巴喷出火焰。体温高达600度。"},
+  {id:241,name_zh:"大奶罐",name_en:"miltank",types:["一般"],height:1.2,weight:75.5,ability:"厚脂肪",stats:{hp:95,atk:80,def:105,spa:40,spd:70,spe:100},desc:"乳汁营养丰富。长期饮用大奶罐的奶有益健康。"},
+  {id:242,name_zh:"幸福蛋",name_en:"blissey",types:["一般"],height:1.5,weight:46.8,ability:"自然回复",stats:{hp:255,atk:10,def:10,spa:75,spd:135,spe:55},desc:"充满善意的宝可梦。会把自己的蛋分给受伤的人。"},
+  {id:243,name_zh:"雷公",name_en:"raikou",types:["电"],height:1.9,weight:178.0,ability:"压迫感",stats:{hp:90,atk:85,def:75,spa:115,spd:100,spe:115},desc:"传说中伴随着闪电现身。吼声如雷鸣般震撼。"},
+  {id:244,name_zh:"炎帝",name_en:"entei",types:["火"],height:2.1,weight:198.0,ability:"压迫感",stats:{hp:115,atk:115,def:85,spa:90,spd:75,spe:100},desc:"传说中伴随着火山爆发现身。会喷出熔岩般的火焰。"},
+  {id:245,name_zh:"水君",name_en:"suicune",types:["水"],height:2.0,weight:187.0,ability:"压迫感",stats:{hp:100,atk:75,def:115,spa:90,spd:115,spe:85},desc:"传说中伴随着北风现身。跑过的地方会涌出清水。"},
+  {id:246,name_zh:"幼基拉斯",name_en:"larvitar",types:["岩石","地面"],height:0.6,weight:72.0,ability:"毅力",stats:{hp:50,atk:64,def:50,spa:45,spd:50,spe:41},desc:"以泥土为食。会把吃下的土变成能量用于成长。"},
+  {id:247,name_zh:"沙基拉斯",name_en:"pupitar",types:["岩石","地面"],height:1.2,weight:152.0,ability:"蜕皮",stats:{hp:70,atk:84,def:70,spa:65,spd:70,spe:51},desc:"被坚硬的壳包裹着。在壳内积蓄力量准备进化。"},
+  {id:248,name_zh:"班基拉斯",name_en:"tyranitar",types:["岩石","恶"],height:2.0,weight:202.0,ability:"扬沙",stats:{hp:100,atk:134,def:110,spa:95,spd:100,spe:61},desc:"拥有毁灭一切的力量。一旦暴走就会把大山踏平。"},
+  {id:249,name_zh:"洛奇亚",name_en:"lugia",types:["超能力","飞行"],height:5.2,weight:216.0,ability:"压迫感",stats:{hp:106,atk:90,def:130,spa:90,spd:154,spe:110},desc:"传说中平息海啸的宝可梦。扇动翅膀能引发40天的风暴。"},
+  {id:250,name_zh:"凤王",name_en:"hooh",types:["火","飞行"],height:3.8,weight:199.0,ability:"压迫感",stats:{hp:106,atk:130,def:90,spa:110,spd:154,spe:90},desc:"彩虹般的羽毛。传说见过凤王的人会得到永远的幸福。"},
+  {id:251,name_zh:"时拉比",name_en:"celebi",types:["超能力","草"],height:0.6,weight:5.0,ability:"自然回复",stats:{hp:100,atk:100,def:100,spa:100,spd:100,spe:100},desc:"穿越时空的宝可梦。每当出现时森林就会变得生机勃勃。"},];
 
 // ─── App State ───
 let currentId = null;
